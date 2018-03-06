@@ -44,4 +44,19 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     min_length = min_validation.options[:minimum]
     assert_select "li", "Password is too short (minimum is 5 characters)"
   end
+  test "valid signup information creates new user" do
+    get signup_path
+    # Asserts that when a new User instance is created, User.count increases by exactly 1.
+    assert_difference 'User.count', 1 do
+      # post -> 'create' -> @user = User.new(user_params) (in this case, user_params are valid) -> @user.valid? => true -> @user.save => true -> redirect...
+      post users_path, params: { user: { name: "Example User",
+                          email: "user@example.com",
+                          password: "password",
+                          password_confirmation: "password" } }
+    end
+    follow_redirect!
+    # redirect_to user_url(@user) is required for a new users show page - hence, the following will only be rendered as long as the redirect is successful.
+    assert_template 'users/show'
+    assert_not flash.empty?
+  end 
 end
