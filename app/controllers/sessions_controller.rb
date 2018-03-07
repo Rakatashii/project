@@ -2,12 +2,13 @@ class SessionsController < ApplicationController
   def new
   end
   def create
-    user = User.find_by(params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password]
-      # Log user in
+    user = User.find_by(email: params[:session][:email].downcase)
+    if user && user.authenticate(params[:session][:password])
+      # Log user in - No submit button until redirect provided
     else
-      # Error
-      render 'new' # Rerender w/ invalidation info
+      # Handle errors
+      flash.now[:danger] = 'Invalid Email/Password Combination'
+      render 'new'
     end
   end
   def destroy
