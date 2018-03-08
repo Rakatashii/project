@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     #debugger
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       flash[:success] = "Welcome to the Sample App"
       #While this block is empty, the submission button on the signup page will remain frozen. Once the redirection is known, however, the create my account button can be blicked and the 'user_params' are injected into a User object, which is then saved.
       redirect_to @user

@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # Log user in - No submit button until redirect provided
       log_in user
-      redirect_to user # user is automatically gotten from user_url(user)
+      redirect_to user # user is automatically gotten from user_url(user) (i.e., user/1 ??)
     else
       # Handle errors
       flash.now[:danger] = 'Invalid Email/Password Combination'

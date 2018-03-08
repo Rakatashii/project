@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class UsersLoginTest < ActionDispatch::IntegrationTest
+  def setup
+    @user = users(:michael) # from "michael: ..." in fixtures
+  end
+  test "logi with valid information" do
+    post login_path, params: { session: { email: @user.email,                          password: 'password' } }
+    assert_redirected_to @user # If login succeeds (which it should, based on the custom fixture, then 'redirected_to @user' should be true.
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select "a[href=?]", login_path, count: 0
+    assert_select "a[href=?]", logout_path
+    assert_select "a[href=?]", user_path(@user)
+    assert is_logged_in?
+  end
   test "login with invalid information" do
     get login_path
     assert_template 'sessions/new'
