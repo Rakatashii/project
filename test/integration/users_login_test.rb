@@ -4,15 +4,22 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael) # from "michael: ..." in fixtures
   end
-  test "logi with valid information" do
+  test "login with valid information" do
     post login_path, params: { session: { email: @user.email,                          password: 'password' } }
+    assert is_logged_in?
     assert_redirected_to @user # If login succeeds (which it should, based on the custom fixture, then 'redirected_to @user' should be true.
     follow_redirect!
     assert_template 'users/show'
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
-    assert is_logged_in?
+    delete logout_path
+    assert_not is_logged_in?
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", logout_path, count: 0 # Why would count be 0, shouldn't it be 1 now that user is not logged in (i.e., logged out???)
+    assert_select "a[href=?]", user_path(@user), count: 0
   end
   test "login with invalid information" do
     get login_path
