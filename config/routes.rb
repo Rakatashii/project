@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
+  #get 'sessions/new' #is this supposed to be here? 
+  # WATCH - commenting out for now, as of 9.2
 
   root 'static_pages#home'
   #get '/home', to: 'static_pages/home'
