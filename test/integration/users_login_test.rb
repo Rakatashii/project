@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael) # from "michael: ..." in fixtures
+    # Notice, user will not have remember_digest attr.
   end
   test "login with valid information" do
     post login_path, params: { session: { email: @user.email,                          password: 'password' } }
@@ -13,12 +14,16 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
+    
     delete logout_path
     assert_not is_logged_in?
     assert_redirected_to root_url
+    
+    # Simulate a user clicking logout in a second window
+    delete logout_path # Tests failing b/c of this rn
     follow_redirect!
     assert_select "a[href=?]", login_path
-    assert_select "a[href=?]", logout_path, count: 0 # Why would count be 0, shouldn't it be 1 now that user is not logged in (i.e., logged out???)
+    assert_select "a[href=?]", logout_path, count: 0
     assert_select "a[href=?]", user_path(@user), count: 0
   end
   test "login with invalid information" do

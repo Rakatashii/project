@@ -26,6 +26,7 @@ class User < ApplicationRecord
   end
   # Returns true if the given token matches the digest.
   def authenticated?(remember_token)
+    return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token) # == 'Bcrypt.new(remember_digest) == remember_token', where BCrypt overrides the '==' operator.
     # Basically, ~if BCrypt translated remember_token into remember_digest ...
   end

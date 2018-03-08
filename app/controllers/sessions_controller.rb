@@ -15,7 +15,8 @@ class SessionsController < ApplicationController
     end
   end
   def destroy
-    log_out
+    log_out if logged_in? # How do we get self here?
+    # Don't need it. log_in and log_out operate on @current_user
     redirect_to root_url
   end
 end
