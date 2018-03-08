@@ -6,7 +6,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     # Notice, user will not have remember_digest attr.
   end
   test "login with valid information" do
-    post login_path, params: { session: { email: @user.email,                          password: 'password' } }
+    post login_path, params: { session: { email: @user.email, password: 'password' } }
     assert is_logged_in?
     assert_redirected_to @user # If login succeeds (which it should, based on the custom fixture, then 'redirected_to @user' should be true.
     follow_redirect!
@@ -34,5 +34,17 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     get root_path # We want flash[:danger] to display an error message on the next rerendering of 'sessions/new', but don't want it to persist long enough to be displayed on the home page should the user click that instead of trying new login information.
     assert flash.empty?
+  end
+  test "login with remembering" do 
+    log_in_as(@user, remember_me: '1')
+    assert_equal assigns[:user].remember_token, cookies['remember_token']
+    # this, v, works, but ^ is better/more advanced
+    # assert_not_empty cookies['remember_token']
+  end
+  test "login without remembering" do
+    log_in_as(@user, remember_me: '1')
+    # Log in again and verify that the cookie is deleted
+    log_in_as(@user, remember_me: '0')
+    assert_empty cookies['remember_token']
   end
 end
