@@ -9,7 +9,9 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password # requires BCrypt
   validates :password, presence: true, length: { minimum: 5 }, 
-                    confirmation: true
+                    allow_nil: true
+  # Got rid of 'confirmation: true' WATCH
+  # As long as you are using has_secure_password, one needs to only add 'allow_nil: true' to the end of your password validation. If you go to the password update page and save without entering anything, it doesn't overwrite the password as blank, and the validations still apply if you do enter something. See: https://stackoverflow.com/questions/31352063/rails-skipping-password-validation-allow-nil-safe
   class << self
     def digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
