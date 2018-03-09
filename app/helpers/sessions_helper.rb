@@ -16,7 +16,6 @@ module SessionsHelper
     elsif (user_id = cookies.signed[:user_id]) 
       #raise # The tests still pass, so this branch is currently untested
       user = User.find_by(id: user_id)
-# user.authenticated?(cookies[:remember_token]) basically says, if BCrypt_operation(remember_token) == remember_digest...
       if user && user.authenticated?(cookies[:remember_token])
         log_in user
         @current_user = user
