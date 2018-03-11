@@ -10,6 +10,9 @@ module SessionsHelper
     session.delete(:user_id) # Why not destroy (sessions_controller.rb)? Where is #delete even defined?
     @current_user = nil
   end
+  def current_user?(user)
+    current_user == user
+  end
   def current_user
     if (user_id = session[:user_id]) # i.e., if the user is logged in (has a session w/ user's id)
       @current_user ||= User.find_by(id: user_id)
