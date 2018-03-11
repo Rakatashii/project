@@ -5,7 +5,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:michael) # from "michael: ..." in fixtures
     # Notice, user will not have remember_digest attr.
   end
-  test "login with valid information" do
+  test "login with valid information followed by logout" do
     post login_path, params: { session: { email: @user.email, password: 'password' } }
     assert is_logged_in?
     assert_redirected_to @user # If login succeeds (which it should, based on the custom fixture, then 'redirected_to @user' should be true.

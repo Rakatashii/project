@@ -24,6 +24,7 @@ class ActionDispatch::IntegrationTest # We need a version of #log_in_as that can
     post login_path, params: { session: { email: user.email,
                                           password: password,
                                           remember_me: remember_me } }
+    # Since we post new session, session is created: this means that params[:session][:remember_me] == '1' ? remember(user) : forget(user)
   end
 end
   

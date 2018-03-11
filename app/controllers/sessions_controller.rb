@@ -1,22 +1,21 @@
 class SessionsController < ApplicationController
-  def new
+  def new # GET /sessions/new
   end
-  def create
+  def create # POST /sessions
     @user = User.find_by(email: params[:session][:email].downcase)
     if @user && @user.authenticate(params[:session][:password])
       # Log user in - No submit button until redirect provided
       log_in @user
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to @user # user is automatically gotten from user_url(user) (i.e., user/1 ??)
+      redirect_to @user # immediately after creating the new user will redirect to user/that_user_id
     else
       # Handle errors
       flash.now[:danger] = 'Invalid Email/Password Combination'
-      render 'new'
+      render 'new' # Renders the form, rather than redirecting to user/that_user_id for a successful creation
     end
   end
-  def destroy
-    log_out if logged_in? # How do we get self here?
-    # Don't need it. log_in and log_out operate on @current_user
-    redirect_to root_url
+  def destroy # DELETE /sessions/:id
+    log_out if logged_in? 
+    redirect_to root_url # After logout, redirects to home page
   end
 end

@@ -1,10 +1,10 @@
 class StaticPagesController < ApplicationController
-  def home
+  def home # GET / (Where '/' is the root)
   end
-  def help
+  def help # GET /help
   end
-  def about
+  def about # GET /about
   end
-  def contact
+  def contact # Get /contact
   end
 end

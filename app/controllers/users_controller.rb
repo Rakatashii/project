@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  def show
+  def show # GET /photos/:id
     @user = User.find(params[:id])
   end
-  def new
+  def new # GET /photos/new
     @user = User.new
   end
-  def create
+  def create # POST /photos
     @user = User.new(user_params)
     if @user.save
       log_in @user
@@ -15,10 +15,10 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-  def edit
+  def edit # GET /photos/:id/edit
     @user = User.find(params[:id])
   end
-  def update
+  def update # PATCH/PUT /photos/:id
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"

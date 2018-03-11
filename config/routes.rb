@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   get    '/contact', to: 'static_pages#contact'
   get    '/signup',  to: 'users#new'
   post   '/signup',  to: 'users#create'
-  resources :users
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   #patch  '/users/:id/edit', to: 'users#edit'
+  resources :users
 end
