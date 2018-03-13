@@ -16,6 +16,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     # This second argument should be "The form contains 4 errors" - not really problematic...
     assert_select "div.alert", "The form contains 3 errors"
   end
+  # v WATCH: With the last test in play, this test should eventually be removed, since rendering the edit template is no longer the expected behavior.
   test "successful edit" do
     log_in_as(@user) 
     get edit_user_path(@user)
@@ -26,13 +27,31 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                     email: email,
                                     password: "",
                                     password_confirmation: "" } } 
-    # if edit is supposed to be successful, why is password/password_confirmation empty?
-    # Note that the password and confirmation in Listing 10.11 are blank, which is convenient for users who don’t want to update their passwords every time they update their names or email addresses. - Why do we even provide the params?
-    # Pry - user=User.second; user.authenticate("Jake6465")=>true; user.update_attributes(password: "", password_confirmation: ""); user.autheticate("Jake6465")=>true; user.authenticate("")=>false
     assert_not flash.empty?
     assert_redirected_to @user
     @user.reload
     assert_equal name, @user.name
     assert_equal email, @user.email
+  end
+  test "successful edit with friendly forwarding" do
+    get edit_user_path(@user)
+    log_in_as(@user)
+    assert_redirected_to edit_user_url(@user)
+    
+    name = "Bar Baz"
+    email = "foo@bar.com"
+    patch user_path(@user), params: { user: { name: name,
+                                  email: email,
+                                  password: "",
+                                  password_confirmation: "" } }
+    assert_not flash.empty?
+    assert_redirected_to @user
+    @user.reload
+    assert_equal name, @user.name
+    assert_equal email, @user.email
+    
+    assert_nil session[:forwarding_url]
+    log_in_as(@user)
+    assert_redirected_to user_url(@user)
   end
 end

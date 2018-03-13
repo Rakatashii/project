@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
       # Log user in - No submit button until redirect provided
       log_in @user
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to @user # immediately after creating the new user will redirect to user/that_user_id
+      redirect_back_or @user
+      #redirect_to @user # immediately after creating the new user will redirect to user/that_user_id
     else
       # Handle errors
       flash.now[:danger] = 'Invalid Email/Password Combination'

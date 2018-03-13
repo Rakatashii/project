@@ -36,4 +36,14 @@ module SessionsHelper
     cookies.delete(:remember_token)
     # Once this is defined we update 'log out' w/ forget(current_user)
   end
+  # Redirects to stored location (or to default)
+  # Why? In order to forward users to their intended destination (friendly forwarding), we need to store the location of the requested page somewhere, and then redirect to that location instead of the default.
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+  # Stores the URL trying to be accessed.
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get? # puts the requested URL in the session variable under the key :forwarding_url, but only for a GET request
+  end
 end
