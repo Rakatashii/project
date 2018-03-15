@@ -1,14 +1,10 @@
-<% provide(:title, 'All Users') %>
-<h1>All Users</h1>
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
 
 <%= will_paginate %>
 
-<!-- how does this work? Inside a model view (s.a., users, here) #will_paginate automatically looks for an @users obj, then displays pagination links to access other pages -->
-
 <ul class="users">
-  <% @users.each do |user| %>
-    <%= render @users %>
-  <% end %>
+  <%= render @users %>
 </ul>
 
 <%= will_paginate %>
