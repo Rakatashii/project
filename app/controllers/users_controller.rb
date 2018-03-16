@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
   def show # GET /users/:id
     @user = User.find(params[:id])
-    #minor
+    #minormin
   end
   def new # GET /users/new
     @user = User.new
