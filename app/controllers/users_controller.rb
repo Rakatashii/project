@@ -4,11 +4,10 @@ class UsersController < ApplicationController
   before_action :non_admin,      only: :destroy
   
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
   def show # GET /users/:id
     @user = User.find(params[:id])
-    #minorminrge
   end
   def new # GET /users/new
     @user = User.new
