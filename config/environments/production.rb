@@ -96,7 +96,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
-    :port           => ''587',
+    :port           => '587',
     :protocol       => 'https' # WATCH
     :authentication => 'plain',
     :user_name      => ENV['SENDGRID_USERNAME'],
