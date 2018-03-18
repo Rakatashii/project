@@ -26,10 +26,12 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, User.digest(remember_token))
   end
   # Returns true if the given token matches the digest.
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token) # == 'Bcrypt.new(remember_digest) == remember_token', where BCrypt overrides the '==' operator.
-    # Basically, ~if BCrypt translated remember_token into remember_digest ...
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+    #BCrypt overrides the '==' operator, which is why this is so confusing...
+    # Basically, ~if BCrypt translated remember_token into remember_digest..
   end
   def forget
     update_attribute(:remember_digest, nil)

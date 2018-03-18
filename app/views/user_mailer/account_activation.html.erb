@@ -1,6 +1,10 @@
 <h1>Sample App</h1>
 
-<p> Hi <%= @user.name %>, </p>
+<%- if @user.admin -%>
+  <p>HELLO ADMIN <%= @user.name -%>!</p>
+<%- else -%>
+  <p> Hi <%= @user.name -%>, </p>
+<%- end -%>
 <p>
   Welcome to the Sample App! Click the link below to activate your account:
 </p>
