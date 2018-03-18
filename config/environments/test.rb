@@ -42,4 +42,5 @@ Rails.application.configure do
   
   #WATCH
   config.action_mailer.default_url_options = { host: 'localhost:3000', protocol: 'http' } 
+  # Specify [port: 3000] option??? 
 end
