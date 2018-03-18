@@ -41,8 +41,9 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   
   config.action_mailer.delivery_method = :test
+  host = 'localhost:3000'
   #WATCH
-  config.action_mailer.default_url_options = { host: 'localhost:3000' } 
+  config.action_mailer.default_url_options = { host: host } 
   # Specify [port: 3000] option??? 
   # Note: removed [protocal: 'http'] option since not specified in text for test development.
 end

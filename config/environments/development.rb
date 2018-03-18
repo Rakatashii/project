@@ -29,7 +29,8 @@ Rails.application.configure do
 # AFTER rails generate mailer...
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :test
-  config.action_mailer.default_url_options = { host: 'localhost:3000', protocol: 'http' } # WATCH - can change to https
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' } # WATCH - can change to https
   # Specify [port: 3000] option??? 
 # end
 
