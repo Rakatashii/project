@@ -4,8 +4,7 @@ class AccountActivationsController < ApplicationController
     # ^ this can be eliminated since, by the 'before_action' statement, @user is now defined in #correct_user
     user = User.find_by(email: params[:email])
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
-      user.update_attribute(:activated, true)
-      user.update_attribute(:activated_at, Time.zone.now)
+      user.activate
       log_in user
       flash[:success] = "Account Activated!"
       redirect_to user

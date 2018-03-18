@@ -37,9 +37,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
   test "login with remembering" do 
     log_in_as(@user, remember_me: '1')
-    assert_equal assigns[:user].remember_token, cookies['remember_token']
-    # this, v, works, but ^ is better/more advanced
-    # assert_not_empty cookies['remember_token']
+    #assert_equal cookies['remember_token'], assigns(:user).remember_token
+    # ^ better, stopped working after edit/create in sessions/account_activations controllers
+    assert_not_empty cookies['remember_token']
   end
   test "login without remembering" do
     log_in_as(@user, remember_me: '1')

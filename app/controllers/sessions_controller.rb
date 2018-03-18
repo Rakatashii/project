@@ -2,17 +2,21 @@ class SessionsController < ApplicationController
   def new # GET /sessions/new
   end
   def create # POST /sessions
-    @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authenticate(params[:session][:password])
-      # Log user in - No submit button until redirect provided
-      log_in @user
-      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_back_or @user
-      #redirect_to @user # immediately after creating the new user will redirect to user/that_user_id
+    user = User.find_by(email: params[:session][:email].downcase)
+    if user && user.authenticate(params[:session][:password])
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
-      # Handle errors
-      flash.now[:danger] = 'Invalid Email/Password Combination'
-      render 'new' # Renders the form, rather than redirecting to user/that_user_id for a successful creation
+      flash.now[:danger] = 'Invalid email/password combination'
+      render 'new'
     end
   end
   def destroy # DELETE /sessions/:id
