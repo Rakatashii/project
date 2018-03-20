@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   #get 'sessions/new' #is this supposed to be here? 
   # WATCH - commenting out for now, as of 9.2
 
@@ -15,4 +19,5 @@ Rails.application.routes.draw do
   #patch  '/users/:id/edit', to: 'users#edit'
   resources :users
   resources :account_activations, only: [:edit]
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end
