@@ -1,6 +1,6 @@
 class AccountActivationsController < ApplicationController
   def edit # GET /users/:id/edit
-    # @user = User.find(params[:id])
+    # @user = User.find(params[:id]) #==@user.activation_token
     # ^ this can be eliminated since, by the 'before_action' statement, @user is now defined in #correct_user
     user = User.find_by(email: params[:email])
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
