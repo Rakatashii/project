@@ -30,6 +30,7 @@ class PasswordResetsController < ApplicationController
     else
       render 'edit' #Case2: handles - A failed update due to an invalid password #No error/flash[:danger] ???
     end
+  end
   
   private
     
@@ -50,4 +51,5 @@ class PasswordResetsController < ApplicationController
         redirect_to new_password_reset_url #path?
       end
     end
+    
 end
