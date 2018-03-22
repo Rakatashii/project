@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_many :microposts
+  has_many :microposts, dependent: :destroy
+  # ensures that all of a users microposts will be destroyed upon user deletion
   attr_accessor     :remember_token, :activation_token, :reset_token
   before_save       :downcase_email
   before_create     :create_activation_digest

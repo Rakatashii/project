@@ -1,9 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  content: MyText
-  user: one
+orange:
+  content: "Florida, home of the orange!"
+  created_at: <%= 10.minutes.ago %>
 
-two:
-  content: MyText
-  user: two
+tau_manifesto: 
+  content: "Check out the @tauday site by @mhartl!"
+  created_at: <%= 3.years.ago %>
+  
+cat_vid:
+  content: "Sad cats... http://youtube.com/sad_cats:("
+  created_at: <%= 2.hours.ago %>
+  
+most_recent: 
+  content: "Writing a short test"
+  created_at: <%= Time.zone.now %>
+  
