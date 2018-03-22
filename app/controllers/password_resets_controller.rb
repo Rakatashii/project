@@ -1,12 +1,7 @@
 class PasswordResetsController < ApplicationController
-<<<<<<< HEAD
-  before_action :get_user,    only: [:edit, :update]
-  before_action :valid_user,  only: [:edit, :update]
-=======
   before_action :get_user,   only: [:edit, :update]
   before_action :valid_user, only: [:edit, :update]
   before_action :check_expiration, only: [:edit, :update]
->>>>>>> password-reset
   
   def new
   end
