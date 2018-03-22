@@ -25,10 +25,14 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params) #Case4: handles - A successful update 
       log_in @user
+      @user.update_attribute(:reset_digest, nil)
+      # ^ prevents users on, say, a public computer from clicking the link and changing the password, even if the user is logged out...
       flash[:success] = "Password has been reset."
       redirect_to @user
     else
       render 'edit' #Case2: handles - A failed update due to an invalid password #No error/flash[:danger] ???
+      # Error: "Password Confirmation doesn't match password"
+      # Where does ^ come from?
     end
   end
   
