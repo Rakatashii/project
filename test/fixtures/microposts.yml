@@ -3,6 +3,7 @@
 orange:
   content: "Florida, home of the orange!"
   created_at: <%= 10.minutes.ago %>
+  user: michael
 
 tau_manifesto: 
   content: "Check out the @tauday site by @mhartl!"
@@ -15,4 +16,11 @@ cat_vid:
 most_recent: 
   content: "Writing a short test"
   created_at: <%= Time.zone.now %>
+  
+<% 30.times do |n| %>
+micropost_<%= n %>":
+  content: <%= Faker::Lorem.sentence(5) %>
+  created_at: <%= (1..100).to_a.shuffle[0].days.ago %>
+  user: michael
+<% end %>
   
