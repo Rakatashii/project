@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  require 'pry'
+  #require 'pry'
   has_many :microposts, dependent: :destroy
   # ensures that all of a users microposts will be destroyed upon user deletion
   attr_accessor     :remember_token, :activation_token, :reset_token
@@ -60,6 +60,9 @@ class User < ApplicationRecord
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   
   private
   
@@ -70,5 +73,5 @@ class User < ApplicationRecord
       self.activation_token = User.new_token
       self.activation_digest = User.digest(activation_token)
     end
-  binding.pry
+  #binding.pry
 end

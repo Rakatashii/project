@@ -37,7 +37,4 @@ end
 
 group :production do
   gem 'pg', '0.18.4'
-endnew gem hehe
-hehe
-hehe
-hehe
+end
