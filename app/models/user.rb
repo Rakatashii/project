@@ -62,6 +62,7 @@ class User < ApplicationRecord
   end
   def feed
     Micropost.where("user_id = ?", id)
+    # This is basically just 'microposts', but safer
   end
   
   private
