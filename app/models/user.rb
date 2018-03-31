@@ -62,6 +62,7 @@ class User < ApplicationRecord
   end
   def feed
     Micropost.where("user_id = ?", id)
+    # WHy? Logs: SELECT COUNT(*) FROM "microposts" WHERE (user_id = 101)
     # This is basically just 'microposts', but safer
   end
   
