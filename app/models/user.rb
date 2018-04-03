@@ -22,7 +22,7 @@ class User < ApplicationRecord
       BCrypt::Password.create(string, cost: cost)
     end
     def new_token
-      SecureRandom.urlsafe_base64 # Generates 22 character string, w/ each char having 64 possible variations. Hence, 1/64**(-22) == 1/2**(-132) change of colliding.
+      SecureRandom.urlsafe_base64 # Generates 22 character string, w/ each char having 64 possible variations. Hence, 1/64**(-22) == 1/2**(-132) chance of colliding.
     end
   end
   def remember
@@ -34,8 +34,8 @@ class User < ApplicationRecord
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
-    #BCrypt overrides the '==' operator, which is why this is so confusing...
-    # Basically, ~if BCrypt translated remember_token into remember_digest..
+    # BCrypt overrides the '==' operator, which is why this is so confusing...
+    # Basically, ~if BCrypt successfully translated remember_token into remember_digest
   end
   def forget
     update_attribute(:remember_digest, nil)
@@ -62,7 +62,7 @@ class User < ApplicationRecord
   end
   def feed
     Micropost.where("user_id = ?", id)
-    # WHy? Logs: SELECT COUNT(*) FROM "microposts" WHERE (user_id = 101)
+    # Why? Logs: SELECT COUNT(*) FROM "microposts" WHERE (user_id = 101) - note: no user_id apparent in html source
     # This is basically just 'microposts', but safer
   end
   
@@ -75,5 +75,5 @@ class User < ApplicationRecord
       self.activation_token = User.new_token
       self.activation_digest = User.digest(activation_token)
     end
-  #binding.pry
+  #binding.pry 
 end
