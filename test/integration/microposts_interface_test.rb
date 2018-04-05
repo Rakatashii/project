@@ -38,6 +38,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     get root_path
     assert_match "#{@user.microposts.count} microposts".pluralize(@user.microposts.count), response.body
     # User with 0 microposts (non-existent user)
+    # assert_match "#{@user.microposts.count} microposts" raises an error - \38/ microposts not found in response.body = ... weird
     other_user = users(:malory)
     log_in_as(other_user)
     get root_path
