@@ -1,5 +1,4 @@
 class MicropostsController < ApplicationController
-  require 'pry'
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: :destroy
   def create
@@ -13,6 +12,7 @@ class MicropostsController < ApplicationController
     end
   end
   def destroy
+    #byebug # request.referrer returns "http://localhost:3000/users/101" in byebug
     @micropost.destroy
     flash[:success] = "Micropost deleted"
     redirect_to request.referrer || root_url # request.referrer is the previous url that @user visited.
@@ -27,5 +27,4 @@ class MicropostsController < ApplicationController
       @micropost = current_user.microposts.find_by(id: params[:id])
       redirect_to root_url if @micropost.nil?
     end
-  binding.pry
 end

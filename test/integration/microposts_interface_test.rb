@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'Pry'
+#require 'pry'
 
 class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   def setup
@@ -20,7 +20,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
       post microposts_path, params: { micropost: { content: content } }
     end
     assert_redirected_to root_url
-    follow_redirect!
+    follow_redirect! # since the last statement was a redirect (to the root url), ensures redirected to root_url
     assert_match content, response.body
     # Delete post
     assert_select 'a', text: 'delete'
@@ -46,6 +46,5 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     other_user.microposts.create!(content: "A micropost")
     get root_path
     assert_match "1 micropost", response.body
-    binding.pry
   end
 end
