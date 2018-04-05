@@ -1,0 +1,18 @@
+# helpers = Rails.application.routes.named_routes.helpers
+# ^ take out 'helpers' in rails c to get list of named routes.
+
+=begin
+include Rails.application.routes.url_helpers
+
+# set host in default_url_options:
+default_url_options[:host] = "localhost"
+
+# can then use:
+url_for()
+
+# can check existing routes:
+edit_user_url(User.first)
+=> "http://localhost/user/1/edit"
+=end
+
+
