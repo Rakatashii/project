@@ -13,8 +13,8 @@ gem 'bcrypt',                     '3.1.11'
 gem 'faker',                      '1.8.7'  
 gem 'will_paginate',              '3.1.6'  
 gem 'bootstrap-will_paginate',    '1.0.0'  
-gem 'carrierwave',                '~> 1.2'
-gem 'mini_magick',                '4.8.0'
+gem 'carrierwave',                '~> 1.2' #WATCH
+gem 'mini_magick',                '4.8.0'  #WATCH
 
 group :development, :test do
   gem 'sqlite3',                  '1.3.13'
@@ -27,7 +27,7 @@ group :development do
   gem 'listen',                   '3.1.5'
   gem 'spring',                   '2.0.2'
   gem 'spring-watcher-listen',    '2.0.1'
-  gem 'pry-rails',                '0.3.6' # watch
+  gem 'pry-rails',                '0.3.6' 
 end
 
 group :test do
@@ -39,5 +39,5 @@ end
 
 group :production do
   gem 'pg',                       '0.18.4'
-  gem 'fog',                      '2.0.0'
+  gem 'fog',                      '2.0.0'  #WATCH - bundler did not update gems in production due to initial --without production - what to do about this?
 end
